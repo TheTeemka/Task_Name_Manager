@@ -4,6 +4,7 @@ import (
 	"log/slog"
 	"os"
 
+	_ "github.com/TheTeemka/hhChat/cmd/api/docs"
 	"github.com/TheTeemka/hhChat/internal/config"
 	"github.com/TheTeemka/hhChat/internal/database"
 	"github.com/TheTeemka/hhChat/internal/repo"

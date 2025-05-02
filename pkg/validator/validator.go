@@ -1,6 +1,8 @@
 package validator
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 type Validator struct {
 	Errors map[string]string
@@ -29,12 +31,14 @@ func (v *Validator) Check(constraint bool, key, message string) {
 	}
 }
 
-type validatorWrapper struct {
-	ValidationErrors map[string]string `json:"validation_errors"`
+type ErrorWrapper struct {
+	Errors map[string]string `json:"errors"`
 }
 
 func (v *Validator) String() string {
-	w := validatorWrapper{v.Errors}
+	w := ErrorWrapper{
+		Errors: v.Errors,
+	}
 	b, err := json.MarshalIndent(w, "", "  ")
 	if err != nil {
 		panic(err)

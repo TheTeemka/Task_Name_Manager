@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 func (s *Server) Router() http.Handler {
@@ -17,5 +18,7 @@ func (s *Server) Router() http.Handler {
 		r.Delete("/{id}", s.PersonHandler.DeleteByID)
 		r.Patch("/{id}", s.PersonHandler.UpdateByID)
 	})
+
+	r.Get("/swagger/*", httpSwagger.WrapHandler)
 	return r
 }

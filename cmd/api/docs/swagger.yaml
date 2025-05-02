@@ -1,0 +1,228 @@
+definitions:
+  repo.Person:
+    properties:
+      age:
+        type: integer
+      created_at:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      nationality:
+        type: string
+      surname:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  server.ErrorWrapper:
+    properties:
+      errors:
+        additionalProperties:
+          type: string
+        description: '@Example: {"name":"Name is required","surname":"Surname is required"}'
+        type: object
+    type: object
+  service.CreatePersonReq:
+    properties:
+      name:
+        type: string
+      surname:
+        type: string
+    type: object
+  service.UpdatePersonReq:
+    properties:
+      age:
+        type: integer
+      gender:
+        type: string
+      name:
+        type: string
+      nationality:
+        type: string
+      surname:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /people:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of people based on query parameters
+      parameters:
+      - description: Filter by name
+        in: query
+        name: name
+        type: string
+      - description: Filter by surname
+        in: query
+        name: surname
+        type: string
+      - description: Filter by age
+        in: query
+        name: age
+        type: integer
+      - description: Filter by gender
+        in: query
+        name: gender
+        type: string
+      - description: Filter by nationality
+        in: query
+        name: nationality
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/repo.Person'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/server.ErrorWrapper'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/server.ErrorWrapper'
+      summary: Get people by filters
+      tags:
+      - People
+    post:
+      consumes:
+      - application/json
+      description: Create a new person in the database
+      parameters:
+      - description: Person to create
+        in: body
+        name: person
+        required: true
+        schema:
+          $ref: '#/definitions/service.CreatePersonReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/repo.Person'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/server.ErrorWrapper'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/server.ErrorWrapper'
+      summary: Create a person
+      tags:
+      - People
+  /people/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a person from the database by their ID
+      parameters:
+      - description: Person ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/server.ErrorWrapper'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/server.ErrorWrapper'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/server.ErrorWrapper'
+      summary: Delete a person by ID
+      tags:
+      - People
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a single person by their ID
+      parameters:
+      - description: Person ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/repo.Person'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/server.ErrorWrapper'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/server.ErrorWrapper'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/server.ErrorWrapper'
+      summary: Get a person by ID
+      tags:
+      - People
+    patch:
+      consumes:
+      - application/json
+      description: Update the details of a person by their ID
+      parameters:
+      - description: Person ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated person details
+        in: body
+        name: person
+        required: true
+        schema:
+          $ref: '#/definitions/service.UpdatePersonReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/repo.Person'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/server.ErrorWrapper'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/server.ErrorWrapper'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/server.ErrorWrapper'
+      summary: Update a person by ID
+      tags:
+      - People
+swagger: "2.0"
