@@ -29,9 +29,16 @@ func (h *PersonHandler) CreatePerson(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	v := validator.New()
+	req.Validate(v)
+	if !v.Valid() {
+		http.Error(w, v.String(), http.StatusBadRequest)
+		return
+	}
+
 	p, err := h.personService.CreatePerson(req)
 	if err != nil {
-		slog.Error("failed to create person", "error", err)
+		slog.Error("CreatePerson", "error", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -52,7 +59,7 @@ func (h *PersonHandler) GetByFilters(w http.ResponseWriter, r *http.Request) {
 
 	people, err := h.personService.GetByFilters(filter)
 	if err != nil {
-		slog.Error("failed to get people", "error", err)
+		slog.Error("GetByFilters", "error", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -72,7 +79,7 @@ func (h *PersonHandler) GetByID(w http.ResponseWriter, r *http.Request) {
 
 	person, err := h.personService.GetByID(id)
 	if err != nil {
-		slog.Error("failed to get people", "error", err)
+		slog.Error("GetByID", "error", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -92,7 +99,7 @@ func (h *PersonHandler) DeleteByID(w http.ResponseWriter, r *http.Request) {
 
 	err = h.personService.DeleteByID(id)
 	if err != nil {
-		slog.Error("failed to get people", "error", err)
+		slog.Error("DeleteByID", "error", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -114,9 +121,16 @@ func (h *PersonHandler) UpdateByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	v := validator.New()
+	req.Validate(v)
+	if !v.Valid() {
+		http.Error(w, v.String(), http.StatusBadRequest)
+		return
+	}
+
 	p, err := h.personService.UpdateByID(id, req)
 	if err != nil {
-		slog.Error("failed to update person", "error", err)
+		slog.Error("UpdateByID", "error", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
