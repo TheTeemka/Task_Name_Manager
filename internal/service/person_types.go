@@ -1,6 +1,6 @@
 package service
 
-import "github.com/TheTeemka/hhChat/pkg/validator"
+import "github.com/TheTeemka/TaskNameManager/pkg/validator"
 
 type CreatePersonReq struct {
 	Name    string `json:"name"`

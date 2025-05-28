@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/TheTeemka/hhChat/pkg/validator"
+	"github.com/TheTeemka/TaskNameManager/pkg/validator"
 )
 
 type Filter struct {
@@ -91,14 +91,14 @@ func (b *builder) AddWhere(key, value string) {
 
 func (b *builder) AddLimit(value string) {
 	if b.limit.Len() > 0 {
-		panic("Only one limit can be")
+		panic("Only one limit can be added")
 	}
 	b.limit.WriteString("LIMIT " + value + " ")
 }
 
 func (b *builder) AddOffset(value string) {
 	if b.offset.Len() > 0 {
-		panic("Only one offset can be")
+		panic("Only one offset can be added")
 	}
 	b.limit.WriteString("OFFSET " + value + " ")
 }

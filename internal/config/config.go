@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/TheTeemka/hhChat/pkg/validator"
+	"github.com/TheTeemka/TaskNameManager/pkg/validator"
 	"github.com/joho/godotenv"
 )
 

@@ -4,14 +4,14 @@ import (
 	"context"
 	"time"
 
-	"github.com/TheTeemka/hhChat/internal/repo"
+	"github.com/TheTeemka/TaskNameManager/internal/repo"
 )
 
 type PersonService struct {
-	repo *repo.PersonRepository
+	repo repo.PersonRepository
 }
 
-func NewPersonService(rep *repo.PersonRepository) *PersonService {
+func NewPersonService(rep repo.PersonRepository) *PersonService {
 	return &PersonService{
 		repo: rep,
 	}

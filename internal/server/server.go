@@ -9,7 +9,7 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/TheTeemka/hhChat/internal/service"
+	"github.com/TheTeemka/TaskNameManager/internal/service"
 )
 
 type Server struct {

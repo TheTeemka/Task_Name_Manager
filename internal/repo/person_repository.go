@@ -10,12 +10,20 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-type PersonRepository struct {
+type PersonRepository interface {
+	Create(ctx context.Context, person *Person) (*Person, error)
+	GetByID(ctx context.Context, id int64) (*Person, error)
+	GetByFilters(ctx context.Context, filter *Filter) ([]*Person, error)
+	DeleteByID(ctx context.Context, id int64) error
+	Update(ctx context.Context, p *Person) error
+}
+
+type personRepository struct {
 	db *sqlx.DB
 }
 
-func NewPersonRepository(db *sqlx.DB) *PersonRepository {
-	return &PersonRepository{
+func NewPersonRepository(db *sqlx.DB) PersonRepository {
+	return &personRepository{
 		db: db,
 	}
 }
@@ -31,7 +39,7 @@ type Person struct {
 	UpdatedAt   time.Time `db:"updated_at" json:"updated_at"`
 }
 
-func (rp *PersonRepository) Create(ctx context.Context, person *Person) (*Person, error) {
+func (rp *personRepository) Create(ctx context.Context, person *Person) (*Person, error) {
 	query := `
 		INSERT INTO people(name, surname, age, gender, nationality)
 		VALUES(:name, :surname, :age, :gender, :nationality)`
@@ -51,11 +59,11 @@ func (rp *PersonRepository) Create(ctx context.Context, person *Person) (*Person
 	return person, nil
 }
 
-func (rp *PersonRepository) GetByID(ctx context.Context, id int64) (*Person, error) {
+func (rp *personRepository) GetByID(ctx context.Context, id int64) (*Person, error) {
 	query := `
 		SELECT id, name, surname, age, gender, nationality, created_at, updated_at
 		FROM people
-		WHERE id=$1`
+		WHERE id=$1;`
 
 	var p Person
 	err := rp.db.GetContext(ctx, &p, query, id)
@@ -66,10 +74,10 @@ func (rp *PersonRepository) GetByID(ctx context.Context, id int64) (*Person, err
 	return &p, nil
 }
 
-func (rp *PersonRepository) GetByFilters(ctx context.Context, filter *Filter) ([]*Person, error) {
+func (rp *personRepository) GetByFilters(ctx context.Context, filter *Filter) ([]*Person, error) {
 	query := `
 		SELECT id, name, surname, age, gender, nationality, created_at, updated_at 
-		FROM people`
+		FROM people;`
 	query += filter.String()
 	slog.Info(query)
 
@@ -82,7 +90,7 @@ func (rp *PersonRepository) GetByFilters(ctx context.Context, filter *Filter) ([
 	return p, nil
 }
 
-func (rp *PersonRepository) DeleteByID(ctx context.Context, id int64) error {
+func (rp *personRepository) DeleteByID(ctx context.Context, id int64) error {
 	query := `
 		DELETE FROM people WHERE id=$1`
 
@@ -94,7 +102,7 @@ func (rp *PersonRepository) DeleteByID(ctx context.Context, id int64) error {
 	return nil
 }
 
-func (rp *PersonRepository) Update(ctx context.Context, p *Person) error {
+func (rp *personRepository) Update(ctx context.Context, p *Person) error {
 	slog.Debug("person on update", "person", *p)
 	query := `
         UPDATE people

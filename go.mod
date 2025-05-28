@@ -1,4 +1,4 @@
-module github.com/TheTeemka/hhChat
+module github.com/TheTeemka/TaskNameManager
 
 go 1.24.1
 

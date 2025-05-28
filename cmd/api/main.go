@@ -4,13 +4,13 @@ import (
 	"log/slog"
 	"os"
 
-	_ "github.com/TheTeemka/hhChat/cmd/api/docs"
-	"github.com/TheTeemka/hhChat/internal/config"
-	"github.com/TheTeemka/hhChat/internal/database"
-	"github.com/TheTeemka/hhChat/internal/repo"
-	"github.com/TheTeemka/hhChat/internal/server"
-	"github.com/TheTeemka/hhChat/internal/service"
-	"github.com/TheTeemka/hhChat/pkg/utils"
+	_ "github.com/TheTeemka/TaskNameManager/cmd/api/docs"
+	"github.com/TheTeemka/TaskNameManager/internal/config"
+	"github.com/TheTeemka/TaskNameManager/internal/database"
+	"github.com/TheTeemka/TaskNameManager/internal/repo"
+	"github.com/TheTeemka/TaskNameManager/internal/server"
+	"github.com/TheTeemka/TaskNameManager/internal/service"
+	"github.com/TheTeemka/TaskNameManager/pkg/utils"
 )
 
 func main() {

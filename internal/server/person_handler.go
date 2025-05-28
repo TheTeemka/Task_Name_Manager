@@ -8,10 +8,10 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/TheTeemka/hhChat/internal/repo"
-	"github.com/TheTeemka/hhChat/internal/service"
-	"github.com/TheTeemka/hhChat/pkg/utils"
-	"github.com/TheTeemka/hhChat/pkg/validator"
+	"github.com/TheTeemka/TaskNameManager/internal/repo"
+	"github.com/TheTeemka/TaskNameManager/internal/service"
+	"github.com/TheTeemka/TaskNameManager/pkg/utils"
+	"github.com/TheTeemka/TaskNameManager/pkg/validator"
 	"github.com/go-chi/chi"
 )
 
